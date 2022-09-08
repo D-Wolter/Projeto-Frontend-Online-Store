@@ -1,8 +1,10 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 class Home extends React.Component {
   state = {
     productName: '',
+    messageOn: false,
   };
 
   handleChange = ({ target }) => {
@@ -12,8 +14,14 @@ class Home extends React.Component {
     });
   };
 
+  handleClick = () => {
+    this.setState({
+      messageOn: true,
+    });
+  };
+
   render() {
-    const { productName } = this.state;
+    const { productName, messageOn } = this.state;
     return (
       <div>
         <input
@@ -28,6 +36,17 @@ class Home extends React.Component {
             <p data-testid="home-initial-message">
               Digite algum termo de pesquisa ou escolha uma categoria.
             </p>)
+        }
+        <button
+          data-testid="shopping-cart-button"
+          type="button"
+          onClick={ this.handleClick }
+        >
+          Carrinho de compras
+
+        </button>
+        {
+          messageOn && <Redirect to="/Cart" />
         }
       </div>
 
