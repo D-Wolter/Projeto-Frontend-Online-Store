@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { getCategories, getProductByName, getProductById } from '../services/api';
 
 class Home extends React.Component {
@@ -86,11 +86,14 @@ class Home extends React.Component {
           messageOn && <Redirect to="/Cart" />
         }
         { results !== undefined ? results.map(({ id, title, thumbnail, price }) => (
-          <div key={ id } data-testid="product">
-            {title}
-            <img src={ thumbnail } alt={ title } />
-            {price}
-          </div>
+          <Link data-testid="product-detail-link" key={ id } to={ `/detail/${id}` }>
+            {' '}
+            <div key={ id } data-testid="product">
+              {title}
+              <img src={ thumbnail } alt={ title } />
+              {price}
+            </div>
+          </Link>
         )) : <p>Nenhum produto foi encontrado</p>}
         {lista.map((e) => (
           <label htmlFor="radio" key={ e.id } data-testid="category">
