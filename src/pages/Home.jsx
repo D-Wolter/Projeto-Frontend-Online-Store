@@ -1,10 +1,23 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { getCategories } from '../services/api';
 
 class Home extends React.Component {
   state = {
     productName: '',
     messageOn: false,
+    lista: [],
+  };
+
+  componentDidMount() {
+    this.requestApi();
+  }
+
+  requestApi = async () => {
+    const retorno = await getCategories();
+    this.setState({
+      lista: retorno,
+    });
   };
 
   handleChange = ({ target }) => {
@@ -21,7 +34,7 @@ class Home extends React.Component {
   };
 
   render() {
-    const { productName, messageOn } = this.state;
+    const { productName, messageOn, lista } = this.state;
     return (
       <div>
         <input
@@ -48,6 +61,12 @@ class Home extends React.Component {
         {
           messageOn && <Redirect to="/Cart" />
         }
+
+        {lista.map((e) => (
+          <label htmlFor="radio" key={ e.id } data-testid="category">
+            { e.name }
+            <input type="radio" id="radio" key={ e.id } />
+          </label>))}
       </div>
 
     );
