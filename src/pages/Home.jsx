@@ -64,7 +64,7 @@ class Home extends React.Component {
           type="button"
           onClick={ this.requireProducts }
         >
-          Pesquisar
+          Pesquisarr
         </button>
         {
           productName.length === 0
