@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { getCategories, getProductByName } from '../services/api';
+import { getCategories, getProductByName, getProductById } from '../services/api';
 
 class Home extends React.Component {
   state = {
@@ -13,7 +13,6 @@ class Home extends React.Component {
 
   componentDidMount() {
     this.requestApi();
-    this.teste();
   }
 
   requestApi = async () => {
@@ -21,11 +20,6 @@ class Home extends React.Component {
     this.setState({
       lista: retorno,
     });
-  };
-
-  teste = async () => {
-    const result = await getProductByName('carro');
-    console.log(result);
   };
 
   handleChange = ({ target }) => {
@@ -39,12 +33,19 @@ class Home extends React.Component {
     const { productName } = this.state;
     const dataApi = await getProductByName(productName);
     this.setState({ products: dataApi });
-    console.log(dataApi);
   };
 
   handleClick = () => {
     this.setState({
       messageOn: true,
+    });
+  };
+
+  requestCategoryID = async ({ target }) => {
+    const { value } = target;
+    const resultApiCategory = await getProductById(value);
+    this.setState({
+      products: resultApiCategory,
     });
   };
 
@@ -91,11 +92,17 @@ class Home extends React.Component {
             {price}
           </div>
         )) : <p>Nenhum produto foi encontrado</p>}
-
         {lista.map((e) => (
           <label htmlFor="radio" key={ e.id } data-testid="category">
             { e.name }
-            <input type="radio" id="radio" key={ e.id } />
+            <input
+              onClick={ this.requestCategoryID }
+              type="radio"
+              name="categories"
+              id="radio"
+              value={ e.id }
+              key={ e.id }
+            />
           </label>))}
       </div>
 
