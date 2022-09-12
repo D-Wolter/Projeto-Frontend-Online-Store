@@ -86,14 +86,22 @@ class Home extends React.Component {
           messageOn && <Redirect to="/Cart" />
         }
         { results !== undefined ? results.map(({ id, title, thumbnail, price }) => (
-          <Link data-testid="product-detail-link" key={ id } to={ `/detail/${id}` }>
-            {' '}
-            <div key={ id } data-testid="product">
-              {title}
-              <img src={ thumbnail } alt={ title } />
-              {price}
-            </div>
-          </Link>
+          <div key={ id }>
+            <Link data-testid="product-detail-link" key={ id } to={ `/detail/${id}` }>
+              {' '}
+              <div key={ id } data-testid="product">
+                {title}
+                <img src={ thumbnail } alt={ title } />
+                {price}
+              </div>
+            </Link>
+            <button
+              data-testid="product-add-to-cart"
+              type="button"
+            >
+              Adicionar ao carrinho
+            </button>
+          </div>
         )) : <p>Nenhum produto foi encontrado</p>}
         {lista.map((e) => (
           <label htmlFor="radio" key={ e.id } data-testid="category">
