@@ -1,18 +1,24 @@
-const FAVORITE_CHARACTER = 'favorite_characters';
+const CART_ITEM = 'cart_item';
 
-const readFavoriteCharacter = () => JSON.parse(localStorage.getItem(FAVORITE_CHARACTER));
+const readFavoriteCharacter = () => JSON.parse(localStorage.getItem(CART_ITEM));
 
-const saveFavoriteCharacter = (favoriteCharacter) => localStorage
-  .setItem(FAVORITE_CHARACTER, JSON.stringify(favoriteCharacter));
+const saveFavoriteCharacter = (cartItem) => localStorage
+  .setItem(CART_ITEM, JSON.stringify(cartItem));
 
-export const addFavorites = (character) => {
-  const favorites = readFavoriteCharacter() || [];
-  saveFavoriteCharacter([...favorites, character]);
+export const addFavorites = (product, price, id) => {
+  const cart = readFavoriteCharacter() || [];
+  const objeto = {
+    product,
+    price,
+    id,
+  };
+
+  saveFavoriteCharacter([...cart, objeto]);
 };
 
-export const getFavorites = () => readFavoriteCharacter() || [];
+export const getCartItem = () => readFavoriteCharacter() || [];
 
-export const removeFavorite = (character) => {
-  const favorites = readFavoriteCharacter() || [];
-  saveFavoriteCharacter(favorites.filter((s) => s.id !== character.id));
+export const removeFavorite = (product) => {
+  const cart = readFavoriteCharacter() || [];
+  saveFavoriteCharacter(cart.filter((s) => s.id !== product.id));
 };

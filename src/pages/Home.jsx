@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { getCategories, getProductByName, getProductById } from '../services/api';
+import { addFavorites } from '../services/cartApi';
 
 class Home extends React.Component {
   state = {
@@ -98,6 +99,7 @@ class Home extends React.Component {
             <button
               data-testid="product-add-to-cart"
               type="button"
+              onClick={ () => addFavorites(title, price, id) }
             >
               Adicionar ao carrinho
             </button>
