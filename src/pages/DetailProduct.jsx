@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getProductDetails } from '../services/api';
+import { addFavorites } from '../services/cartApi';
 
 export default class DetailProduct extends Component {
   state = {
@@ -21,7 +22,7 @@ export default class DetailProduct extends Component {
   };
 
   render() {
-    const { data: { title, thumbnail, price, warranty } } = this.state;
+    const { data: { title, thumbnail, price, warranty, id } } = this.state;
     return (
       <div>
         <img data-testid="product-detail-image" src={ thumbnail } alt={ title } />
@@ -29,8 +30,20 @@ export default class DetailProduct extends Component {
         <span data-testid="product-detail-price">{`R$ ${price}`}</span>
         <p>{warranty}</p>
         <Link to="/cart">
-          <button data-testid="shopping-cart-button" type="button">Comprar</button>
+          <button
+            data-testid="shopping-cart-button"
+            type="button"
+          >
+            Comprar
+          </button>
         </Link>
+        <button
+          data-testid="product-detail-add-to-cart"
+          type="button"
+          onClick={ () => addFavorites(title, price, id) }
+        >
+          Adicionar ao carrinho
+        </button>
 
       </div>
     );
