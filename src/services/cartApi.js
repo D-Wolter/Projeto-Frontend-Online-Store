@@ -11,6 +11,7 @@ export const addFavorites = (product, price, id) => {
     product,
     price,
     id,
+    qnt: 1,
   };
 
   saveFavoriteCharacter([...cart, objeto]);
